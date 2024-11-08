@@ -2,18 +2,18 @@ speakeasyVersion: 1.436.0
 sources:
     BookClub-OAS:
         sourceNamespace: book-club-oas
-        sourceRevisionDigest: sha256:451cc93bbddf9fbcb95c8ebe13260ede98a6394b80e55be7bc741e744626117a
-        sourceBlobDigest: sha256:3d4b71897d08ab64b08a30592ba3c0cc25163893680d39623de5faa10e8f9985
+        sourceRevisionDigest: sha256:31e0947fd3b79e18cafb7256cbe3b782e5c5f0d91800ae7395caa7857d3bd127
+        sourceBlobDigest: sha256:9f69e6ab82828b737d361308558d19973e7ccd3108ef0e3b7840c5225cafede6
         tags:
             - latest
 targets:
     book-club:
         source: BookClub-OAS
         sourceNamespace: book-club-oas
-        sourceRevisionDigest: sha256:451cc93bbddf9fbcb95c8ebe13260ede98a6394b80e55be7bc741e744626117a
-        sourceBlobDigest: sha256:3d4b71897d08ab64b08a30592ba3c0cc25163893680d39623de5faa10e8f9985
+        sourceRevisionDigest: sha256:31e0947fd3b79e18cafb7256cbe3b782e5c5f0d91800ae7395caa7857d3bd127
+        sourceBlobDigest: sha256:9f69e6ab82828b737d361308558d19973e7ccd3108ef0e3b7840c5225cafede6
         codeSamplesNamespace: book-club-oas-code-samples
-        codeSamplesRevisionDigest: sha256:1e00e706de0621b25e210dd10fee64d0c4d58264669ad7d154e622e28fdf9db2
+        codeSamplesRevisionDigest: sha256:2e36bf8c2d9e964f1818703db1a416e51c4f9dc829e40d8bad112e42b431cb82
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
@@ -28,6 +28,9 @@ workflow:
             target: typescript
             source: BookClub-OAS
             output: dist
+            publish:
+                npm:
+                    token: $npm_token
             codeSamples:
                 registry:
                     location: registry.speakeasyapi.dev/walker/walker/book-club-oas-code-samples
