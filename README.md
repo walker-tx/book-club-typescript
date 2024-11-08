@@ -270,7 +270,7 @@ run();
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-All SDK methods return a response object or throw an error. By default, an API error will throw a `errors.SDKError`.
+All SDK methods return a response object or throw an error. By default, an API error will throw a `errors.APIError`.
 
 If a HTTP request fails, an operation my also throw an error from the `models/errors/httpclienterrors.ts` module:
 
@@ -287,7 +287,7 @@ In addition, when custom error responses are specified for an operation, the SDK
 | Error Type      | Status Code | Content Type     |
 | --------------- | ----------- | ---------------- |
 | errors.ErrorT   | 400         | application/json |
-| errors.SDKError | 4XX, 5XX    | \*/\*            |
+| errors.APIError | 4XX, 5XX    | \*/\*            |
 
 ```typescript
 import { BookClub } from "book-club";
@@ -429,8 +429,6 @@ import { BookClub } from "book-club";
 
 const sdk = new BookClub({ debugLogger: console });
 ```
-
-You can also enable a default debug logger by setting an environment variable `BOOKCLUB_DEBUG` to true.
 <!-- End Debugging [debug] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->

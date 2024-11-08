@@ -87,7 +87,7 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.ErrorT    | 400              | application/json |
-| errors.SDKError  | 4XX, 5XX         | \*/\*            |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |
 
 ## create
 
@@ -162,7 +162,7 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.ErrorT    | 400              | application/json |
-| errors.SDKError  | 4XX, 5XX         | \*/\*            |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |
 
 ## get
 
@@ -235,7 +235,7 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.ErrorT    | 400, 404         | application/json |
-| errors.SDKError  | 4XX, 5XX         | \*/\*            |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |
 
 ## delete
 
@@ -306,4 +306,4 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.ErrorT    | 400, 404         | application/json |
-| errors.SDKError  | 4XX, 5XX         | \*/\*            |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |

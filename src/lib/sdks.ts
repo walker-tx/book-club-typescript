@@ -15,7 +15,6 @@ import { ERR, OK, Result } from "../types/fp.js";
 import { stringToBase64 } from "./base64.js";
 import { SDK_METADATA, SDKOptions, serverURLFromOptions } from "./config.js";
 import { encodeForm } from "./encodings.js";
-import { env } from "./env.js";
 import {
   HTTPClient,
   isAbortError,
@@ -103,9 +102,6 @@ export class ClientSDK {
     this._baseURL = baseURL;
     this.#httpClient = client;
     this.#logger = options.debugLogger;
-    if (!this.#logger && env().BOOKCLUB_DEBUG) {
-      this.#logger = console;
-    }
   }
 
   public _createRequest(

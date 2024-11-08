@@ -87,7 +87,7 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.ErrorT    | 400, 404         | application/json |
-| errors.SDKError  | 4XX, 5XX         | \*/\*            |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |
 
 ## add
 
@@ -164,4 +164,4 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.ErrorT    | 400, 404, 409    | application/json |
-| errors.SDKError  | 4XX, 5XX         | \*/\*            |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |

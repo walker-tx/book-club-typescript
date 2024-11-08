@@ -9,6 +9,7 @@ import * as M from "../lib/matchers.js";
 import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { pathToFunc } from "../lib/url.js";
+import { APIError } from "../models/errors/apierror.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -17,7 +18,6 @@ import {
   UnexpectedClientError,
 } from "../models/errors/httpclienterrors.js";
 import * as errors from "../models/errors/index.js";
-import { SDKError } from "../models/errors/sdkerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
 import * as operations from "../models/operations/index.js";
 import { Result } from "../types/fp.js";
@@ -40,7 +40,7 @@ export async function libraryGet(
     Result<
       operations.GetUserLibraryResponse,
       | errors.ErrorT
-      | SDKError
+      | APIError
       | SDKValidationError
       | UnexpectedClientError
       | InvalidRequestError
@@ -130,7 +130,7 @@ export async function libraryGet(
   const [result, raw] = await M.match<
     operations.GetUserLibraryResponse,
     | errors.ErrorT
-    | SDKError
+    | APIError
     | SDKValidationError
     | UnexpectedClientError
     | InvalidRequestError
@@ -154,7 +154,7 @@ export async function libraryGet(
     Result<
       operations.GetUserLibraryResponse,
       | errors.ErrorT
-      | SDKError
+      | APIError
       | SDKValidationError
       | UnexpectedClientError
       | InvalidRequestError
