@@ -1,0 +1,16 @@
+workflowVersion: 1.0.0
+speakeasyVersion: latest
+sources:
+    BookClub-OAS:
+        inputs:
+            - location: ../book-club-api/openapi.json
+        registry:
+            location: registry.speakeasyapi.dev/walker/walker/book-club-oas
+targets:
+    book-club:
+        target: typescript
+        source: BookClub-OAS
+        codeSamples:
+            registry:
+                location: registry.speakeasyapi.dev/walker/walker/book-club-oas-code-samples
+            blocking: false
