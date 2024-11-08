@@ -11,6 +11,9 @@ targets:
         target: typescript
         source: BookClub-OAS
         output: .
+        publish:
+            npm:
+                token: $npm_token
         codeSamples:
             registry:
                 location: registry.speakeasyapi.dev/walker/walker/book-club-oas-code-samples
