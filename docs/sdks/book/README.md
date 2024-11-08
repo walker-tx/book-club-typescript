@@ -101,14 +101,13 @@ import { BookClub } from "book-club";
 const bookClub = new BookClub();
 
 async function run() {
-  const result = await bookClub.book.create({
+  await bookClub.book.create({
     title: "Frankenstein",
     author: "Mary Shelley",
     isbn10: "0143131842",
   });
 
-  // Handle the result
-  console.log(result);
+
 }
 
 run();
@@ -139,8 +138,7 @@ async function run() {
 
   const { value: result } = res;
 
-  // Handle the result
-  console.log(result);
+  
 }
 
 run();
@@ -157,7 +155,7 @@ run();
 
 ### Response
 
-**Promise\<[components.Book](../../models/components/book.md)\>**
+**Promise\<void\>**
 
 ### Errors
 

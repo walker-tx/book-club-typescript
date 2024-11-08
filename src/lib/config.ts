@@ -11,7 +11,7 @@ import { Params, pathToFunc } from "./url.js";
  * Contains the list of servers available to the SDK
  */
 export const ServerList = [
-  "http://localhost:3000",
+  "https://book-club-api-opal.vercel.app/api",
 ] as const;
 
 export type SDKOptions = {
@@ -52,7 +52,7 @@ export function serverURLFromOptions(options: SDKOptions): URL | null {
 export const SDK_METADATA = {
   language: "typescript",
   openapiDocVersion: "1.0.0",
-  sdkVersion: "0.0.1",
-  genVersion: "2.452.0",
-  userAgent: "speakeasy-sdk/typescript 0.0.1 2.452.0 1.0.0 book-club",
+  sdkVersion: "0.0.2",
+  genVersion: "2.455.2",
+  userAgent: "speakeasy-sdk/typescript 0.0.2 2.455.2 1.0.0 book-club",
 } as const;

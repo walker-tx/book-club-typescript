@@ -3,7 +3,7 @@ speakeasyVersion: latest
 sources:
     BookClub-OAS:
         inputs:
-            - location: ../book-club-api/openapi.json
+            - location: https://book-club-api-opal.vercel.app/api/docs
         registry:
             location: registry.speakeasyapi.dev/walker/walker/book-club-oas
 targets:

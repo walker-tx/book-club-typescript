@@ -33,7 +33,7 @@ export class Book extends ClientSDK {
   async create(
     request: operations.CreateBookRequestBody,
     options?: RequestOptions,
-  ): Promise<components.Book> {
+  ): Promise<void> {
     return unwrapAsync(bookCreate(
       this,
       request,
