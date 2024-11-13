@@ -1,12 +1,15 @@
 lockVersion: 2.0.0
 id: 6b0d5e4e-f586-44af-83f4-77a32484a16d
 management:
-  docChecksum: 69c68b97668c6eaeac5feac2daa59007
+  docChecksum: 499fda700fd9722a8040051b1f3cf7bf
   docVersion: 1.0.0
-  speakeasyVersion: 1.436.0
-  generationVersion: 2.455.2
-  releaseVersion: 0.0.1
-  configChecksum: c189ac1e5bad0a4862f6d4faf72f5899
+  speakeasyVersion: 1.438.1
+  generationVersion: 2.457.2
+  releaseVersion: 0.1.0
+  configChecksum: 02886053f0f2f6ae6fc523a6d9d6936c
+  repoURL: https://github.com/walker-tx/book-club-typescript.git
+  installationURL: https://github.com/walker-tx/book-club-typescript
+  published: true
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -14,6 +17,7 @@ features:
     core: 3.18.3
     defaultEnabledRetries: 0.1.0
     envVarSecurityUsage: 0.1.2
+    globalSecurity: 2.82.11
     globalSecurityCallbacks: 0.1.0
     globalServerURLs: 2.82.4
     nameOverrides: 2.81.2
@@ -33,6 +37,9 @@ generatedFiles:
   - docs/lib/utils/retryconfig.md
   - docs/models/components/book.md
   - docs/models/components/paginatedbookresponse.md
+  - docs/models/components/security.md
+  - docs/models/components/securityoption1.md
+  - docs/models/components/securityoption2.md
   - docs/models/components/user.md
   - docs/models/errors/errort.md
   - docs/models/operations/addbooktouserlibraryrequest.md
@@ -89,6 +96,7 @@ generatedFiles:
   - src/models/components/book.ts
   - src/models/components/index.ts
   - src/models/components/paginatedbookresponse.ts
+  - src/models/components/security.ts
   - src/models/components/user.ts
   - src/models/errors/apierror.ts
   - src/models/errors/error.ts

@@ -4,4 +4,5 @@
 
 export * from "./book.js";
 export * from "./paginatedbookresponse.js";
+export * from "./security.js";
 export * from "./user.js";

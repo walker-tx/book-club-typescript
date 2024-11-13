@@ -33,6 +33,7 @@ Developer-friendly & type-safe Typescript SDK specifically catered to leverage *
 * [Error Handling](#error-handling)
 * [Server Selection](#server-selection)
 * [Custom HTTP Client](#custom-http-client)
+* [Authentication](#authentication)
 * [Debugging](#debugging)
 <!-- End Table of Contents [toc] -->
 
@@ -44,25 +45,25 @@ The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https
 ### NPM
 
 ```bash
-npm add <UNSET>
+npm add book-club
 ```
 
 ### PNPM
 
 ```bash
-pnpm add <UNSET>
+pnpm add book-club
 ```
 
 ### Bun
 
 ```bash
-bun add <UNSET>
+bun add book-club
 ```
 
 ### Yarn
 
 ```bash
-yarn add <UNSET> zod
+yarn add book-club zod
 
 # Note that Yarn does not install peer dependencies automatically. You will need
 # to install zod as shown above.
@@ -83,7 +84,14 @@ For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
 ```typescript
 import { BookClub } from "book-club";
 
-const bookClub = new BookClub();
+const bookClub = new BookClub({
+  security: {
+    option1: {
+      appIdAuth: "<YOUR_API_KEY_HERE>",
+      apiKeyAuth: "<YOUR_API_KEY_HERE>",
+    },
+  },
+});
 
 async function run() {
   const result = await bookClub.book.list({
@@ -176,7 +184,14 @@ Here's an example of one such pagination call:
 ```typescript
 import { BookClub } from "book-club";
 
-const bookClub = new BookClub();
+const bookClub = new BookClub({
+  security: {
+    option1: {
+      appIdAuth: "<YOUR_API_KEY_HERE>",
+      apiKeyAuth: "<YOUR_API_KEY_HERE>",
+    },
+  },
+});
 
 async function run() {
   const result = await bookClub.book.list({
@@ -204,7 +219,14 @@ To change the default retry strategy for a single API call, simply provide a ret
 ```typescript
 import { BookClub } from "book-club";
 
-const bookClub = new BookClub();
+const bookClub = new BookClub({
+  security: {
+    option1: {
+      appIdAuth: "<YOUR_API_KEY_HERE>",
+      apiKeyAuth: "<YOUR_API_KEY_HERE>",
+    },
+  },
+});
 
 async function run() {
   const result = await bookClub.book.list({
@@ -247,6 +269,12 @@ const bookClub = new BookClub({
       maxElapsedTime: 100,
     },
     retryConnectionErrors: false,
+  },
+  security: {
+    option1: {
+      appIdAuth: "<YOUR_API_KEY_HERE>",
+      apiKeyAuth: "<YOUR_API_KEY_HERE>",
+    },
   },
 });
 
@@ -293,7 +321,14 @@ In addition, when custom error responses are specified for an operation, the SDK
 import { BookClub } from "book-club";
 import { ErrorT, SDKValidationError } from "book-club/models/errors";
 
-const bookClub = new BookClub();
+const bookClub = new BookClub({
+  security: {
+    option1: {
+      appIdAuth: "<YOUR_API_KEY_HERE>",
+      apiKeyAuth: "<YOUR_API_KEY_HERE>",
+    },
+  },
+});
 
 async function run() {
   let result;
@@ -346,6 +381,12 @@ import { BookClub } from "book-club";
 
 const bookClub = new BookClub({
   serverURL: "https://book-club-api-opal.vercel.app/api",
+  security: {
+    option1: {
+      appIdAuth: "<YOUR_API_KEY_HERE>",
+      apiKeyAuth: "<YOUR_API_KEY_HERE>",
+    },
+  },
 });
 
 async function run() {
@@ -413,6 +454,88 @@ httpClient.addHook("requestError", (error, request) => {
 const sdk = new BookClub({ httpClient });
 ```
 <!-- End Custom HTTP Client [http-client] -->
+
+<!-- Start Authentication [security] -->
+## Authentication
+
+### Per-Client Security Schemes
+
+This SDK supports multiple security scheme combinations globally. You can choose from one of the alternatives by setting the `security` optional parameter when initializing the SDK client instance. The selected option will be used by default to authenticate with the API for all operations that support it.
+
+#### Option1
+
+All of the following schemes must be satisfied to use the `Option1` alternative:
+
+| Name         | Type   | Scheme  |
+| ------------ | ------ | ------- |
+| `appIdAuth`  | apiKey | API key |
+| `apiKeyAuth` | apiKey | API key |
+
+Example:
+```typescript
+import { BookClub } from "book-club";
+
+const bookClub = new BookClub({
+  security: {
+    option1: {
+      appIdAuth: "<YOUR_API_KEY_HERE>",
+      apiKeyAuth: "<YOUR_API_KEY_HERE>",
+    },
+  },
+});
+
+async function run() {
+  const result = await bookClub.book.list({
+    limit: 10,
+    offset: 0,
+  });
+
+  for await (const page of result) {
+    // Handle the page
+    console.log(page);
+  }
+}
+
+run();
+
+```
+
+#### Option2
+
+The `Option2` alternative relies on the following scheme:
+
+| Name         | Type | Scheme      |
+| ------------ | ---- | ----------- |
+| `bearerAuth` | http | HTTP Bearer |
+
+Example:
+```typescript
+import { BookClub } from "book-club";
+
+const bookClub = new BookClub({
+  security: {
+    option2: {
+      bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+    },
+  },
+});
+
+async function run() {
+  const result = await bookClub.book.list({
+    limit: 10,
+    offset: 0,
+  });
+
+  for await (const page of result) {
+    // Handle the page
+    console.log(page);
+  }
+}
+
+run();
+
+```
+<!-- End Authentication [security] -->
 
 <!-- Start Debugging [debug] -->
 ## Debugging

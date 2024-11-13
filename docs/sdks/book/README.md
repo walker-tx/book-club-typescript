@@ -19,7 +19,14 @@ List all books
 ```typescript
 import { BookClub } from "book-club";
 
-const bookClub = new BookClub();
+const bookClub = new BookClub({
+  security: {
+    option1: {
+      appIdAuth: "<YOUR_API_KEY_HERE>",
+      apiKeyAuth: "<YOUR_API_KEY_HERE>",
+    },
+  },
+});
 
 async function run() {
   const result = await bookClub.book.list({
@@ -46,7 +53,14 @@ import { bookList } from "book-club/funcs/bookList.js";
 
 // Use `BookClubCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const bookClub = new BookClubCore();
+const bookClub = new BookClubCore({
+  security: {
+    option1: {
+      appIdAuth: "<YOUR_API_KEY_HERE>",
+      apiKeyAuth: "<YOUR_API_KEY_HERE>",
+    },
+  },
+});
 
 async function run() {
   const res = await bookList(bookClub, {
@@ -98,7 +112,14 @@ Create a book
 ```typescript
 import { BookClub } from "book-club";
 
-const bookClub = new BookClub();
+const bookClub = new BookClub({
+  security: {
+    option1: {
+      appIdAuth: "<YOUR_API_KEY_HERE>",
+      apiKeyAuth: "<YOUR_API_KEY_HERE>",
+    },
+  },
+});
 
 async function run() {
   await bookClub.book.create({
@@ -123,7 +144,14 @@ import { bookCreate } from "book-club/funcs/bookCreate.js";
 
 // Use `BookClubCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const bookClub = new BookClubCore();
+const bookClub = new BookClubCore({
+  security: {
+    option1: {
+      appIdAuth: "<YOUR_API_KEY_HERE>",
+      apiKeyAuth: "<YOUR_API_KEY_HERE>",
+    },
+  },
+});
 
 async function run() {
   const res = await bookCreate(bookClub, {
@@ -173,7 +201,14 @@ Get a book by ID
 ```typescript
 import { BookClub } from "book-club";
 
-const bookClub = new BookClub();
+const bookClub = new BookClub({
+  security: {
+    option1: {
+      appIdAuth: "<YOUR_API_KEY_HERE>",
+      apiKeyAuth: "<YOUR_API_KEY_HERE>",
+    },
+  },
+});
 
 async function run() {
   const result = await bookClub.book.get({
@@ -197,7 +232,14 @@ import { bookGet } from "book-club/funcs/bookGet.js";
 
 // Use `BookClubCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const bookClub = new BookClubCore();
+const bookClub = new BookClubCore({
+  security: {
+    option1: {
+      appIdAuth: "<YOUR_API_KEY_HERE>",
+      apiKeyAuth: "<YOUR_API_KEY_HERE>",
+    },
+  },
+});
 
 async function run() {
   const res = await bookGet(bookClub, {
@@ -246,7 +288,14 @@ Delete a book
 ```typescript
 import { BookClub } from "book-club";
 
-const bookClub = new BookClub();
+const bookClub = new BookClub({
+  security: {
+    option1: {
+      appIdAuth: "<YOUR_API_KEY_HERE>",
+      apiKeyAuth: "<YOUR_API_KEY_HERE>",
+    },
+  },
+});
 
 async function run() {
   await bookClub.book.delete({
@@ -269,7 +318,14 @@ import { bookDelete } from "book-club/funcs/bookDelete.js";
 
 // Use `BookClubCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const bookClub = new BookClubCore();
+const bookClub = new BookClubCore({
+  security: {
+    option1: {
+      appIdAuth: "<YOUR_API_KEY_HERE>",
+      apiKeyAuth: "<YOUR_API_KEY_HERE>",
+    },
+  },
+});
 
 async function run() {
   const res = await bookDelete(bookClub, {
