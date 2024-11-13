@@ -8,6 +8,7 @@ import { encodeSimple } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
 import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
+import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
 import { APIError } from "../models/errors/apierror.js";
 import {
@@ -66,10 +67,16 @@ export async function bookDelete(
     Accept: "application/json",
   });
 
+  const securityInput = await extractSecurity(client._options.security);
+  const requestSecurity = resolveGlobalSecurity(securityInput);
+
   const context = {
     operationID: "deleteBook",
     oAuth2Scopes: [],
-    securitySource: null,
+
+    resolvedSecurity: requestSecurity,
+
+    securitySource: client._options.security,
     retryConfig: options?.retries
       || client._options.retryConfig
       || {
@@ -87,6 +94,7 @@ export async function bookDelete(
   };
 
   const requestRes = client._createRequest(context, {
+    security: requestSecurity,
     method: "DELETE",
     path: path,
     headers: headers,

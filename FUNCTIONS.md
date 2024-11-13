@@ -25,7 +25,14 @@ import { SDKValidationError } from "book-club/models/errors/sdkvalidationerror.j
 
 // Use `BookClubCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const bookClub = new BookClubCore();
+const bookClub = new BookClubCore({
+  security: {
+    option1: {
+      appIdAuth: "<YOUR_API_KEY_HERE>",
+      apiKeyAuth: "<YOUR_API_KEY_HERE>",
+    },
+  },
+});
 
 async function run() {
   const res = await bookList(bookClub, {
