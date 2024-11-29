@@ -8,7 +8,7 @@ import { encodeFormQuery } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
 import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
-import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
+import { resolveSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
 import { APIError } from "../models/errors/apierror.js";
 import {
@@ -34,6 +34,7 @@ import {
  */
 export async function bookList(
   client: BookClubCore,
+  security: operations.ListBooksSecurity,
   request: operations.ListBooksRequest,
   options?: RequestOptions,
 ): Promise<
@@ -48,7 +49,8 @@ export async function bookList(
       | RequestAbortedError
       | RequestTimeoutError
       | ConnectionError
-    >
+    >,
+    { offset: number }
   >
 > {
   const parsed = safeParse(
@@ -73,8 +75,20 @@ export async function bookList(
     Accept: "application/json",
   });
 
-  const securityInput = await extractSecurity(client._options.security);
-  const requestSecurity = resolveGlobalSecurity(securityInput);
+  const requestSecurity = resolveSecurity(
+    [
+      {
+        fieldName: "Authorization",
+        type: "http:bearer",
+        value: security?.bearerAuth,
+      },
+      {
+        fieldName: "X-API-KEY",
+        type: "apiKey:header",
+        value: security?.apiKeyAuth,
+      },
+    ],
+  );
 
   const context = {
     operationID: "listBooks",
@@ -82,7 +96,7 @@ export async function bookList(
 
     resolvedSecurity: requestSecurity,
 
-    securitySource: client._options.security,
+    securitySource: security,
     retryConfig: options?.retries
       || client._options.retryConfig
       || {
@@ -149,41 +163,47 @@ export async function bookList(
 
   const nextFunc = (
     responseData: unknown,
-  ): Paginator<
-    Result<
-      operations.ListBooksResponse,
-      | errors.ErrorT
-      | APIError
-      | SDKValidationError
-      | UnexpectedClientError
-      | InvalidRequestError
-      | RequestAbortedError
-      | RequestTimeoutError
-      | ConnectionError
-    >
-  > => {
+  ): {
+    next: Paginator<
+      Result<
+        operations.ListBooksResponse,
+        | errors.ErrorT
+        | APIError
+        | SDKValidationError
+        | UnexpectedClientError
+        | InvalidRequestError
+        | RequestAbortedError
+        | RequestTimeoutError
+        | ConnectionError
+      >
+    >;
+    "~next"?: { offset: number };
+  } => {
     const offset = request?.offset || 0;
 
     if (!responseData) {
-      return () => null;
+      return { next: () => null };
     }
     const results = dlv(responseData, "results");
     if (!Array.isArray(results) || !results.length) {
-      return () => null;
+      return { next: () => null };
     }
     const nextOffset = offset + results.length;
 
-    return () =>
+    const nextVal = () =>
       bookList(
         client,
+        security,
         {
           ...request,
           offset: nextOffset,
         },
         options,
       );
+
+    return { next: nextVal, "~next": { offset: nextOffset } };
   };
 
-  const page = { ...result, next: nextFunc(raw) };
+  const page = { ...result, ...nextFunc(raw) };
   return { ...page, ...createPageIterator(page, (v) => !v.ok) };
 }

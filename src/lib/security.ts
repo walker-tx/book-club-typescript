@@ -234,21 +234,9 @@ export function resolveGlobalSecurity(
   return resolveSecurity(
     [
       {
-        fieldName: "X-APP-ID",
-        type: "apiKey:header",
-        value: security?.option1?.appIdAuth,
-      },
-      {
         fieldName: "X-API-KEY",
         type: "apiKey:header",
-        value: security?.option1?.apiKeyAuth,
-      },
-    ],
-    [
-      {
-        fieldName: "Authorization",
-        type: "http:bearer",
-        value: security?.option2?.bearerAuth,
+        value: security?.apiKeyAuth,
       },
     ],
   );

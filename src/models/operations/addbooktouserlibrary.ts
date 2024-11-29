@@ -4,6 +4,14 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
+import { safeParse } from "../../lib/schemas.js";
+import { Result as SafeParseResult } from "../../types/fp.js";
+import { SDKValidationError } from "../errors/sdkvalidationerror.js";
+
+export type AddBookToUserLibrarySecurity = {
+  bearerAuth: string;
+  apiKeyAuth: string;
+};
 
 export type AddBookToUserLibraryRequestBody = {
   bookId: number;
@@ -13,6 +21,75 @@ export type AddBookToUserLibraryRequest = {
   userId: number;
   requestBody: AddBookToUserLibraryRequestBody;
 };
+
+/** @internal */
+export const AddBookToUserLibrarySecurity$inboundSchema: z.ZodType<
+  AddBookToUserLibrarySecurity,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  BearerAuth: z.string(),
+  ApiKeyAuth: z.string(),
+}).transform((v) => {
+  return remap$(v, {
+    "BearerAuth": "bearerAuth",
+    "ApiKeyAuth": "apiKeyAuth",
+  });
+});
+
+/** @internal */
+export type AddBookToUserLibrarySecurity$Outbound = {
+  BearerAuth: string;
+  ApiKeyAuth: string;
+};
+
+/** @internal */
+export const AddBookToUserLibrarySecurity$outboundSchema: z.ZodType<
+  AddBookToUserLibrarySecurity$Outbound,
+  z.ZodTypeDef,
+  AddBookToUserLibrarySecurity
+> = z.object({
+  bearerAuth: z.string(),
+  apiKeyAuth: z.string(),
+}).transform((v) => {
+  return remap$(v, {
+    bearerAuth: "BearerAuth",
+    apiKeyAuth: "ApiKeyAuth",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace AddBookToUserLibrarySecurity$ {
+  /** @deprecated use `AddBookToUserLibrarySecurity$inboundSchema` instead. */
+  export const inboundSchema = AddBookToUserLibrarySecurity$inboundSchema;
+  /** @deprecated use `AddBookToUserLibrarySecurity$outboundSchema` instead. */
+  export const outboundSchema = AddBookToUserLibrarySecurity$outboundSchema;
+  /** @deprecated use `AddBookToUserLibrarySecurity$Outbound` instead. */
+  export type Outbound = AddBookToUserLibrarySecurity$Outbound;
+}
+
+export function addBookToUserLibrarySecurityToJSON(
+  addBookToUserLibrarySecurity: AddBookToUserLibrarySecurity,
+): string {
+  return JSON.stringify(
+    AddBookToUserLibrarySecurity$outboundSchema.parse(
+      addBookToUserLibrarySecurity,
+    ),
+  );
+}
+
+export function addBookToUserLibrarySecurityFromJSON(
+  jsonString: string,
+): SafeParseResult<AddBookToUserLibrarySecurity, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => AddBookToUserLibrarySecurity$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'AddBookToUserLibrarySecurity' from JSON`,
+  );
+}
 
 /** @internal */
 export const AddBookToUserLibraryRequestBody$inboundSchema: z.ZodType<
@@ -48,6 +125,26 @@ export namespace AddBookToUserLibraryRequestBody$ {
   export const outboundSchema = AddBookToUserLibraryRequestBody$outboundSchema;
   /** @deprecated use `AddBookToUserLibraryRequestBody$Outbound` instead. */
   export type Outbound = AddBookToUserLibraryRequestBody$Outbound;
+}
+
+export function addBookToUserLibraryRequestBodyToJSON(
+  addBookToUserLibraryRequestBody: AddBookToUserLibraryRequestBody,
+): string {
+  return JSON.stringify(
+    AddBookToUserLibraryRequestBody$outboundSchema.parse(
+      addBookToUserLibraryRequestBody,
+    ),
+  );
+}
+
+export function addBookToUserLibraryRequestBodyFromJSON(
+  jsonString: string,
+): SafeParseResult<AddBookToUserLibraryRequestBody, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => AddBookToUserLibraryRequestBody$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'AddBookToUserLibraryRequestBody' from JSON`,
+  );
 }
 
 /** @internal */
@@ -95,4 +192,24 @@ export namespace AddBookToUserLibraryRequest$ {
   export const outboundSchema = AddBookToUserLibraryRequest$outboundSchema;
   /** @deprecated use `AddBookToUserLibraryRequest$Outbound` instead. */
   export type Outbound = AddBookToUserLibraryRequest$Outbound;
+}
+
+export function addBookToUserLibraryRequestToJSON(
+  addBookToUserLibraryRequest: AddBookToUserLibraryRequest,
+): string {
+  return JSON.stringify(
+    AddBookToUserLibraryRequest$outboundSchema.parse(
+      addBookToUserLibraryRequest,
+    ),
+  );
+}
+
+export function addBookToUserLibraryRequestFromJSON(
+  jsonString: string,
+): SafeParseResult<AddBookToUserLibraryRequest, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => AddBookToUserLibraryRequest$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'AddBookToUserLibraryRequest' from JSON`,
+  );
 }

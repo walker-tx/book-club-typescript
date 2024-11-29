@@ -2,17 +2,13 @@
 ```typescript
 import { BookClub } from "book-club";
 
-const bookClub = new BookClub({
-  security: {
-    option1: {
-      appIdAuth: "<YOUR_API_KEY_HERE>",
-      apiKeyAuth: "<YOUR_API_KEY_HERE>",
-    },
-  },
-});
+const bookClub = new BookClub();
 
 async function run() {
   const result = await bookClub.book.list({
+    bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+    apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  }, {
     limit: 10,
     offset: 0,
   });

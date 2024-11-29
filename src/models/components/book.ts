@@ -3,6 +3,9 @@
  */
 
 import * as z from "zod";
+import { safeParse } from "../../lib/schemas.js";
+import { Result as SafeParseResult } from "../../types/fp.js";
+import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type Book = {
   id: number;
@@ -48,4 +51,18 @@ export namespace Book$ {
   export const outboundSchema = Book$outboundSchema;
   /** @deprecated use `Book$Outbound` instead. */
   export type Outbound = Book$Outbound;
+}
+
+export function bookToJSON(book: Book): string {
+  return JSON.stringify(Book$outboundSchema.parse(book));
+}
+
+export function bookFromJSON(
+  jsonString: string,
+): SafeParseResult<Book, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => Book$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Book' from JSON`,
+  );
 }

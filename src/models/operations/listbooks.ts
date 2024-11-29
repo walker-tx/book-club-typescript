@@ -4,7 +4,15 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
+import { safeParse } from "../../lib/schemas.js";
+import { Result as SafeParseResult } from "../../types/fp.js";
 import * as components from "../components/index.js";
+import { SDKValidationError } from "../errors/sdkvalidationerror.js";
+
+export type ListBooksSecurity = {
+  bearerAuth: string;
+  apiKeyAuth: string;
+};
 
 export type ListBooksRequest = {
   limit?: number | undefined;
@@ -14,6 +22,73 @@ export type ListBooksRequest = {
 export type ListBooksResponse = {
   result: components.PaginatedBookResponse;
 };
+
+/** @internal */
+export const ListBooksSecurity$inboundSchema: z.ZodType<
+  ListBooksSecurity,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  BearerAuth: z.string(),
+  ApiKeyAuth: z.string(),
+}).transform((v) => {
+  return remap$(v, {
+    "BearerAuth": "bearerAuth",
+    "ApiKeyAuth": "apiKeyAuth",
+  });
+});
+
+/** @internal */
+export type ListBooksSecurity$Outbound = {
+  BearerAuth: string;
+  ApiKeyAuth: string;
+};
+
+/** @internal */
+export const ListBooksSecurity$outboundSchema: z.ZodType<
+  ListBooksSecurity$Outbound,
+  z.ZodTypeDef,
+  ListBooksSecurity
+> = z.object({
+  bearerAuth: z.string(),
+  apiKeyAuth: z.string(),
+}).transform((v) => {
+  return remap$(v, {
+    bearerAuth: "BearerAuth",
+    apiKeyAuth: "ApiKeyAuth",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ListBooksSecurity$ {
+  /** @deprecated use `ListBooksSecurity$inboundSchema` instead. */
+  export const inboundSchema = ListBooksSecurity$inboundSchema;
+  /** @deprecated use `ListBooksSecurity$outboundSchema` instead. */
+  export const outboundSchema = ListBooksSecurity$outboundSchema;
+  /** @deprecated use `ListBooksSecurity$Outbound` instead. */
+  export type Outbound = ListBooksSecurity$Outbound;
+}
+
+export function listBooksSecurityToJSON(
+  listBooksSecurity: ListBooksSecurity,
+): string {
+  return JSON.stringify(
+    ListBooksSecurity$outboundSchema.parse(listBooksSecurity),
+  );
+}
+
+export function listBooksSecurityFromJSON(
+  jsonString: string,
+): SafeParseResult<ListBooksSecurity, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ListBooksSecurity$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ListBooksSecurity' from JSON`,
+  );
+}
 
 /** @internal */
 export const ListBooksRequest$inboundSchema: z.ZodType<
@@ -52,6 +127,24 @@ export namespace ListBooksRequest$ {
   export const outboundSchema = ListBooksRequest$outboundSchema;
   /** @deprecated use `ListBooksRequest$Outbound` instead. */
   export type Outbound = ListBooksRequest$Outbound;
+}
+
+export function listBooksRequestToJSON(
+  listBooksRequest: ListBooksRequest,
+): string {
+  return JSON.stringify(
+    ListBooksRequest$outboundSchema.parse(listBooksRequest),
+  );
+}
+
+export function listBooksRequestFromJSON(
+  jsonString: string,
+): SafeParseResult<ListBooksRequest, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ListBooksRequest$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ListBooksRequest' from JSON`,
+  );
 }
 
 /** @internal */
@@ -96,4 +189,22 @@ export namespace ListBooksResponse$ {
   export const outboundSchema = ListBooksResponse$outboundSchema;
   /** @deprecated use `ListBooksResponse$Outbound` instead. */
   export type Outbound = ListBooksResponse$Outbound;
+}
+
+export function listBooksResponseToJSON(
+  listBooksResponse: ListBooksResponse,
+): string {
+  return JSON.stringify(
+    ListBooksResponse$outboundSchema.parse(listBooksResponse),
+  );
+}
+
+export function listBooksResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<ListBooksResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ListBooksResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ListBooksResponse' from JSON`,
+  );
 }

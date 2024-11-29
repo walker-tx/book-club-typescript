@@ -3,10 +3,84 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
+import { safeParse } from "../../lib/schemas.js";
+import { Result as SafeParseResult } from "../../types/fp.js";
+import { SDKValidationError } from "../errors/sdkvalidationerror.js";
+
+export type GetBookSecurity = {
+  bearerAuth: string;
+  apiKeyAuth: string;
+};
 
 export type GetBookRequest = {
   id: number;
 };
+
+/** @internal */
+export const GetBookSecurity$inboundSchema: z.ZodType<
+  GetBookSecurity,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  BearerAuth: z.string(),
+  ApiKeyAuth: z.string(),
+}).transform((v) => {
+  return remap$(v, {
+    "BearerAuth": "bearerAuth",
+    "ApiKeyAuth": "apiKeyAuth",
+  });
+});
+
+/** @internal */
+export type GetBookSecurity$Outbound = {
+  BearerAuth: string;
+  ApiKeyAuth: string;
+};
+
+/** @internal */
+export const GetBookSecurity$outboundSchema: z.ZodType<
+  GetBookSecurity$Outbound,
+  z.ZodTypeDef,
+  GetBookSecurity
+> = z.object({
+  bearerAuth: z.string(),
+  apiKeyAuth: z.string(),
+}).transform((v) => {
+  return remap$(v, {
+    bearerAuth: "BearerAuth",
+    apiKeyAuth: "ApiKeyAuth",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace GetBookSecurity$ {
+  /** @deprecated use `GetBookSecurity$inboundSchema` instead. */
+  export const inboundSchema = GetBookSecurity$inboundSchema;
+  /** @deprecated use `GetBookSecurity$outboundSchema` instead. */
+  export const outboundSchema = GetBookSecurity$outboundSchema;
+  /** @deprecated use `GetBookSecurity$Outbound` instead. */
+  export type Outbound = GetBookSecurity$Outbound;
+}
+
+export function getBookSecurityToJSON(
+  getBookSecurity: GetBookSecurity,
+): string {
+  return JSON.stringify(GetBookSecurity$outboundSchema.parse(getBookSecurity));
+}
+
+export function getBookSecurityFromJSON(
+  jsonString: string,
+): SafeParseResult<GetBookSecurity, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => GetBookSecurity$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetBookSecurity' from JSON`,
+  );
+}
 
 /** @internal */
 export const GetBookRequest$inboundSchema: z.ZodType<
@@ -42,4 +116,18 @@ export namespace GetBookRequest$ {
   export const outboundSchema = GetBookRequest$outboundSchema;
   /** @deprecated use `GetBookRequest$Outbound` instead. */
   export type Outbound = GetBookRequest$Outbound;
+}
+
+export function getBookRequestToJSON(getBookRequest: GetBookRequest): string {
+  return JSON.stringify(GetBookRequest$outboundSchema.parse(getBookRequest));
+}
+
+export function getBookRequestFromJSON(
+  jsonString: string,
+): SafeParseResult<GetBookRequest, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => GetBookRequest$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetBookRequest' from JSON`,
+  );
 }

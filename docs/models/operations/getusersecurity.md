@@ -1,12 +1,12 @@
-# SecurityOption1
+# GetUserSecurity
 
 ## Example Usage
 
 ```typescript
-import { SecurityOption1 } from "book-club/models/components";
+import { GetUserSecurity } from "book-club/models/operations";
 
-let value: SecurityOption1 = {
-  appIdAuth: "<value>",
+let value: GetUserSecurity = {
+  bearerAuth: "<value>",
   apiKeyAuth: "<value>",
 };
 ```
@@ -15,5 +15,5 @@ let value: SecurityOption1 = {
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `appIdAuth`        | *string*           | :heavy_check_mark: | N/A                |
+| `bearerAuth`       | *string*           | :heavy_check_mark: | N/A                |
 | `apiKeyAuth`       | *string*           | :heavy_check_mark: | N/A                |

@@ -3,6 +3,9 @@
  */
 
 import * as z from "zod";
+import { safeParse } from "../../lib/schemas.js";
+import { Result as SafeParseResult } from "../../types/fp.js";
+import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type LoginRequestBody = {
   email: string;
@@ -55,6 +58,24 @@ export namespace LoginRequestBody$ {
   export type Outbound = LoginRequestBody$Outbound;
 }
 
+export function loginRequestBodyToJSON(
+  loginRequestBody: LoginRequestBody,
+): string {
+  return JSON.stringify(
+    LoginRequestBody$outboundSchema.parse(loginRequestBody),
+  );
+}
+
+export function loginRequestBodyFromJSON(
+  jsonString: string,
+): SafeParseResult<LoginRequestBody, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => LoginRequestBody$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'LoginRequestBody' from JSON`,
+  );
+}
+
 /** @internal */
 export const LoginResponseBody$inboundSchema: z.ZodType<
   LoginResponseBody,
@@ -89,4 +110,22 @@ export namespace LoginResponseBody$ {
   export const outboundSchema = LoginResponseBody$outboundSchema;
   /** @deprecated use `LoginResponseBody$Outbound` instead. */
   export type Outbound = LoginResponseBody$Outbound;
+}
+
+export function loginResponseBodyToJSON(
+  loginResponseBody: LoginResponseBody,
+): string {
+  return JSON.stringify(
+    LoginResponseBody$outboundSchema.parse(loginResponseBody),
+  );
+}
+
+export function loginResponseBodyFromJSON(
+  jsonString: string,
+): SafeParseResult<LoginResponseBody, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => LoginResponseBody$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'LoginResponseBody' from JSON`,
+  );
 }

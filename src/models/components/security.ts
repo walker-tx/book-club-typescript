@@ -4,113 +4,13 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
-
-export type SecurityOption1 = {
-  appIdAuth: string;
-  apiKeyAuth: string;
-};
-
-export type SecurityOption2 = {
-  bearerAuth: string;
-};
+import { safeParse } from "../../lib/schemas.js";
+import { Result as SafeParseResult } from "../../types/fp.js";
+import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type Security = {
-  option1?: SecurityOption1 | undefined;
-  option2?: SecurityOption2 | undefined;
+  apiKeyAuth?: string | undefined;
 };
-
-/** @internal */
-export const SecurityOption1$inboundSchema: z.ZodType<
-  SecurityOption1,
-  z.ZodTypeDef,
-  unknown
-> = z.object({
-  AppIdAuth: z.string(),
-  ApiKeyAuth: z.string(),
-}).transform((v) => {
-  return remap$(v, {
-    "AppIdAuth": "appIdAuth",
-    "ApiKeyAuth": "apiKeyAuth",
-  });
-});
-
-/** @internal */
-export type SecurityOption1$Outbound = {
-  AppIdAuth: string;
-  ApiKeyAuth: string;
-};
-
-/** @internal */
-export const SecurityOption1$outboundSchema: z.ZodType<
-  SecurityOption1$Outbound,
-  z.ZodTypeDef,
-  SecurityOption1
-> = z.object({
-  appIdAuth: z.string(),
-  apiKeyAuth: z.string(),
-}).transform((v) => {
-  return remap$(v, {
-    appIdAuth: "AppIdAuth",
-    apiKeyAuth: "ApiKeyAuth",
-  });
-});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace SecurityOption1$ {
-  /** @deprecated use `SecurityOption1$inboundSchema` instead. */
-  export const inboundSchema = SecurityOption1$inboundSchema;
-  /** @deprecated use `SecurityOption1$outboundSchema` instead. */
-  export const outboundSchema = SecurityOption1$outboundSchema;
-  /** @deprecated use `SecurityOption1$Outbound` instead. */
-  export type Outbound = SecurityOption1$Outbound;
-}
-
-/** @internal */
-export const SecurityOption2$inboundSchema: z.ZodType<
-  SecurityOption2,
-  z.ZodTypeDef,
-  unknown
-> = z.object({
-  BearerAuth: z.string(),
-}).transform((v) => {
-  return remap$(v, {
-    "BearerAuth": "bearerAuth",
-  });
-});
-
-/** @internal */
-export type SecurityOption2$Outbound = {
-  BearerAuth: string;
-};
-
-/** @internal */
-export const SecurityOption2$outboundSchema: z.ZodType<
-  SecurityOption2$Outbound,
-  z.ZodTypeDef,
-  SecurityOption2
-> = z.object({
-  bearerAuth: z.string(),
-}).transform((v) => {
-  return remap$(v, {
-    bearerAuth: "BearerAuth",
-  });
-});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace SecurityOption2$ {
-  /** @deprecated use `SecurityOption2$inboundSchema` instead. */
-  export const inboundSchema = SecurityOption2$inboundSchema;
-  /** @deprecated use `SecurityOption2$outboundSchema` instead. */
-  export const outboundSchema = SecurityOption2$outboundSchema;
-  /** @deprecated use `SecurityOption2$Outbound` instead. */
-  export type Outbound = SecurityOption2$Outbound;
-}
 
 /** @internal */
 export const Security$inboundSchema: z.ZodType<
@@ -118,19 +18,16 @@ export const Security$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  Option1: z.lazy(() => SecurityOption1$inboundSchema).optional(),
-  Option2: z.lazy(() => SecurityOption2$inboundSchema).optional(),
+  ApiKeyAuth: z.string().optional(),
 }).transform((v) => {
   return remap$(v, {
-    "Option1": "option1",
-    "Option2": "option2",
+    "ApiKeyAuth": "apiKeyAuth",
   });
 });
 
 /** @internal */
 export type Security$Outbound = {
-  Option1?: SecurityOption1$Outbound | undefined;
-  Option2?: SecurityOption2$Outbound | undefined;
+  ApiKeyAuth?: string | undefined;
 };
 
 /** @internal */
@@ -139,12 +36,10 @@ export const Security$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   Security
 > = z.object({
-  option1: z.lazy(() => SecurityOption1$outboundSchema).optional(),
-  option2: z.lazy(() => SecurityOption2$outboundSchema).optional(),
+  apiKeyAuth: z.string().optional(),
 }).transform((v) => {
   return remap$(v, {
-    option1: "Option1",
-    option2: "Option2",
+    apiKeyAuth: "ApiKeyAuth",
   });
 });
 
@@ -159,4 +54,18 @@ export namespace Security$ {
   export const outboundSchema = Security$outboundSchema;
   /** @deprecated use `Security$Outbound` instead. */
   export type Outbound = Security$Outbound;
+}
+
+export function securityToJSON(security: Security): string {
+  return JSON.stringify(Security$outboundSchema.parse(security));
+}
+
+export function securityFromJSON(
+  jsonString: string,
+): SafeParseResult<Security, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => Security$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Security' from JSON`,
+  );
 }

@@ -8,7 +8,7 @@ import { encodeJSON } from "../lib/encodings.js";
 import * as M from "../lib/matchers.js";
 import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
-import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
+import { resolveSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
 import { APIError } from "../models/errors/apierror.js";
 import {
@@ -28,6 +28,7 @@ import { Result } from "../types/fp.js";
  */
 export async function bookCreate(
   client: BookClubCore,
+  security: operations.CreateBookSecurity,
   request: operations.CreateBookRequestBody,
   options?: RequestOptions,
 ): Promise<
@@ -61,8 +62,20 @@ export async function bookCreate(
     Accept: "application/json",
   });
 
-  const securityInput = await extractSecurity(client._options.security);
-  const requestSecurity = resolveGlobalSecurity(securityInput);
+  const requestSecurity = resolveSecurity(
+    [
+      {
+        fieldName: "Authorization",
+        type: "http:bearer",
+        value: security?.bearerAuth,
+      },
+      {
+        fieldName: "X-API-KEY",
+        type: "apiKey:header",
+        value: security?.apiKeyAuth,
+      },
+    ],
+  );
 
   const context = {
     operationID: "createBook",
@@ -70,7 +83,7 @@ export async function bookCreate(
 
     resolvedSecurity: requestSecurity,
 
-    securitySource: client._options.security,
+    securitySource: security,
     retryConfig: options?.retries
       || client._options.retryConfig
       || {

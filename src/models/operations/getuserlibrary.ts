@@ -4,6 +4,14 @@
 
 import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
+import { safeParse } from "../../lib/schemas.js";
+import { Result as SafeParseResult } from "../../types/fp.js";
+import { SDKValidationError } from "../errors/sdkvalidationerror.js";
+
+export type GetUserLibrarySecurity = {
+  bearerAuth: string;
+  apiKeyAuth: string;
+};
 
 export type GetUserLibraryRequest = {
   userId: number;
@@ -30,6 +38,73 @@ export type GetUserLibraryResponseBody = {
 export type GetUserLibraryResponse = {
   result: GetUserLibraryResponseBody;
 };
+
+/** @internal */
+export const GetUserLibrarySecurity$inboundSchema: z.ZodType<
+  GetUserLibrarySecurity,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  BearerAuth: z.string(),
+  ApiKeyAuth: z.string(),
+}).transform((v) => {
+  return remap$(v, {
+    "BearerAuth": "bearerAuth",
+    "ApiKeyAuth": "apiKeyAuth",
+  });
+});
+
+/** @internal */
+export type GetUserLibrarySecurity$Outbound = {
+  BearerAuth: string;
+  ApiKeyAuth: string;
+};
+
+/** @internal */
+export const GetUserLibrarySecurity$outboundSchema: z.ZodType<
+  GetUserLibrarySecurity$Outbound,
+  z.ZodTypeDef,
+  GetUserLibrarySecurity
+> = z.object({
+  bearerAuth: z.string(),
+  apiKeyAuth: z.string(),
+}).transform((v) => {
+  return remap$(v, {
+    bearerAuth: "BearerAuth",
+    apiKeyAuth: "ApiKeyAuth",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace GetUserLibrarySecurity$ {
+  /** @deprecated use `GetUserLibrarySecurity$inboundSchema` instead. */
+  export const inboundSchema = GetUserLibrarySecurity$inboundSchema;
+  /** @deprecated use `GetUserLibrarySecurity$outboundSchema` instead. */
+  export const outboundSchema = GetUserLibrarySecurity$outboundSchema;
+  /** @deprecated use `GetUserLibrarySecurity$Outbound` instead. */
+  export type Outbound = GetUserLibrarySecurity$Outbound;
+}
+
+export function getUserLibrarySecurityToJSON(
+  getUserLibrarySecurity: GetUserLibrarySecurity,
+): string {
+  return JSON.stringify(
+    GetUserLibrarySecurity$outboundSchema.parse(getUserLibrarySecurity),
+  );
+}
+
+export function getUserLibrarySecurityFromJSON(
+  jsonString: string,
+): SafeParseResult<GetUserLibrarySecurity, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => GetUserLibrarySecurity$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetUserLibrarySecurity' from JSON`,
+  );
+}
 
 /** @internal */
 export const GetUserLibraryRequest$inboundSchema: z.ZodType<
@@ -71,6 +146,24 @@ export namespace GetUserLibraryRequest$ {
   export const outboundSchema = GetUserLibraryRequest$outboundSchema;
   /** @deprecated use `GetUserLibraryRequest$Outbound` instead. */
   export type Outbound = GetUserLibraryRequest$Outbound;
+}
+
+export function getUserLibraryRequestToJSON(
+  getUserLibraryRequest: GetUserLibraryRequest,
+): string {
+  return JSON.stringify(
+    GetUserLibraryRequest$outboundSchema.parse(getUserLibraryRequest),
+  );
+}
+
+export function getUserLibraryRequestFromJSON(
+  jsonString: string,
+): SafeParseResult<GetUserLibraryRequest, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => GetUserLibraryRequest$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetUserLibraryRequest' from JSON`,
+  );
 }
 
 /** @internal */
@@ -115,6 +208,20 @@ export namespace Results$ {
   export type Outbound = Results$Outbound;
 }
 
+export function resultsToJSON(results: Results): string {
+  return JSON.stringify(Results$outboundSchema.parse(results));
+}
+
+export function resultsFromJSON(
+  jsonString: string,
+): SafeParseResult<Results, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => Results$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Results' from JSON`,
+  );
+}
+
 /** @internal */
 export const GetUserLibraryResponseBody$inboundSchema: z.ZodType<
   GetUserLibraryResponseBody,
@@ -155,6 +262,24 @@ export namespace GetUserLibraryResponseBody$ {
   export const outboundSchema = GetUserLibraryResponseBody$outboundSchema;
   /** @deprecated use `GetUserLibraryResponseBody$Outbound` instead. */
   export type Outbound = GetUserLibraryResponseBody$Outbound;
+}
+
+export function getUserLibraryResponseBodyToJSON(
+  getUserLibraryResponseBody: GetUserLibraryResponseBody,
+): string {
+  return JSON.stringify(
+    GetUserLibraryResponseBody$outboundSchema.parse(getUserLibraryResponseBody),
+  );
+}
+
+export function getUserLibraryResponseBodyFromJSON(
+  jsonString: string,
+): SafeParseResult<GetUserLibraryResponseBody, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => GetUserLibraryResponseBody$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetUserLibraryResponseBody' from JSON`,
+  );
 }
 
 /** @internal */
@@ -199,4 +324,22 @@ export namespace GetUserLibraryResponse$ {
   export const outboundSchema = GetUserLibraryResponse$outboundSchema;
   /** @deprecated use `GetUserLibraryResponse$Outbound` instead. */
   export type Outbound = GetUserLibraryResponse$Outbound;
+}
+
+export function getUserLibraryResponseToJSON(
+  getUserLibraryResponse: GetUserLibraryResponse,
+): string {
+  return JSON.stringify(
+    GetUserLibraryResponse$outboundSchema.parse(getUserLibraryResponse),
+  );
+}
+
+export function getUserLibraryResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<GetUserLibraryResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => GetUserLibraryResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetUserLibraryResponse' from JSON`,
+  );
 }
