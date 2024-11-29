@@ -22,19 +22,24 @@ Developer-friendly & type-safe Typescript SDK specifically catered to leverage *
 
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
+<!-- $toc-max-depth=2 -->
+* [book-club](#book-club)
+  * [SDK Installation](#sdk-installation)
+  * [Requirements](#requirements)
+  * [SDK Example Usage](#sdk-example-usage)
+  * [Available Resources and Operations](#available-resources-and-operations)
+  * [Standalone functions](#standalone-functions)
+  * [Pagination](#pagination)
+  * [Retries](#retries)
+  * [Error Handling](#error-handling)
+  * [Server Selection](#server-selection)
+  * [Custom HTTP Client](#custom-http-client)
+  * [Authentication](#authentication)
+  * [Debugging](#debugging)
+* [Development](#development)
+  * [Maturity](#maturity)
+  * [Contributions](#contributions)
 
-* [SDK Installation](#sdk-installation)
-* [Requirements](#requirements)
-* [SDK Example Usage](#sdk-example-usage)
-* [Available Resources and Operations](#available-resources-and-operations)
-* [Standalone functions](#standalone-functions)
-* [Pagination](#pagination)
-* [Retries](#retries)
-* [Error Handling](#error-handling)
-* [Server Selection](#server-selection)
-* [Custom HTTP Client](#custom-http-client)
-* [Authentication](#authentication)
-* [Debugging](#debugging)
 <!-- End Table of Contents [toc] -->
 
 <!-- Start SDK Installation [installation] -->
@@ -84,17 +89,13 @@ For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
 ```typescript
 import { BookClub } from "book-club";
 
-const bookClub = new BookClub({
-  security: {
-    option1: {
-      appIdAuth: "<YOUR_API_KEY_HERE>",
-      apiKeyAuth: "<YOUR_API_KEY_HERE>",
-    },
-  },
-});
+const bookClub = new BookClub();
 
 async function run() {
   const result = await bookClub.book.list({
+    bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+    apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  }, {
     limit: 10,
     offset: 0,
   });
@@ -184,17 +185,13 @@ Here's an example of one such pagination call:
 ```typescript
 import { BookClub } from "book-club";
 
-const bookClub = new BookClub({
-  security: {
-    option1: {
-      appIdAuth: "<YOUR_API_KEY_HERE>",
-      apiKeyAuth: "<YOUR_API_KEY_HERE>",
-    },
-  },
-});
+const bookClub = new BookClub();
 
 async function run() {
   const result = await bookClub.book.list({
+    bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+    apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  }, {
     limit: 10,
     offset: 0,
   });
@@ -219,17 +216,13 @@ To change the default retry strategy for a single API call, simply provide a ret
 ```typescript
 import { BookClub } from "book-club";
 
-const bookClub = new BookClub({
-  security: {
-    option1: {
-      appIdAuth: "<YOUR_API_KEY_HERE>",
-      apiKeyAuth: "<YOUR_API_KEY_HERE>",
-    },
-  },
-});
+const bookClub = new BookClub();
 
 async function run() {
   const result = await bookClub.book.list({
+    bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+    apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  }, {
     limit: 10,
     offset: 0,
   }, {
@@ -270,16 +263,13 @@ const bookClub = new BookClub({
     },
     retryConnectionErrors: false,
   },
-  security: {
-    option1: {
-      appIdAuth: "<YOUR_API_KEY_HERE>",
-      apiKeyAuth: "<YOUR_API_KEY_HERE>",
-    },
-  },
 });
 
 async function run() {
   const result = await bookClub.book.list({
+    bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+    apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  }, {
     limit: 10,
     offset: 0,
   });
@@ -321,19 +311,15 @@ In addition, when custom error responses are specified for an operation, the SDK
 import { BookClub } from "book-club";
 import { ErrorT, SDKValidationError } from "book-club/models/errors";
 
-const bookClub = new BookClub({
-  security: {
-    option1: {
-      appIdAuth: "<YOUR_API_KEY_HERE>",
-      apiKeyAuth: "<YOUR_API_KEY_HERE>",
-    },
-  },
-});
+const bookClub = new BookClub();
 
 async function run() {
   let result;
   try {
     result = await bookClub.book.list({
+      bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+      apiKeyAuth: "<YOUR_API_KEY_HERE>",
+    }, {
       limit: 10,
       offset: 0,
     });
@@ -381,16 +367,13 @@ import { BookClub } from "book-club";
 
 const bookClub = new BookClub({
   serverURL: "https://book-club-api-opal.vercel.app/api",
-  security: {
-    option1: {
-      appIdAuth: "<YOUR_API_KEY_HERE>",
-      apiKeyAuth: "<YOUR_API_KEY_HERE>",
-    },
-  },
 });
 
 async function run() {
   const result = await bookClub.book.list({
+    bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+    apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  }, {
     limit: 10,
     offset: 0,
   });
@@ -460,68 +443,47 @@ const sdk = new BookClub({ httpClient });
 
 ### Per-Client Security Schemes
 
-This SDK supports multiple security scheme combinations globally. You can choose from one of the alternatives by setting the `security` optional parameter when initializing the SDK client instance. The selected option will be used by default to authenticate with the API for all operations that support it.
-
-#### Option1
-
-All of the following schemes must be satisfied to use the `Option1` alternative:
+This SDK supports the following security scheme globally:
 
 | Name         | Type   | Scheme  |
 | ------------ | ------ | ------- |
-| `appIdAuth`  | apiKey | API key |
 | `apiKeyAuth` | apiKey | API key |
 
-Example:
+To authenticate with the API the `apiKeyAuth` parameter must be set when initializing the SDK client instance. For example:
 ```typescript
 import { BookClub } from "book-club";
 
 const bookClub = new BookClub({
-  security: {
-    option1: {
-      appIdAuth: "<YOUR_API_KEY_HERE>",
-      apiKeyAuth: "<YOUR_API_KEY_HERE>",
-    },
-  },
+  apiKeyAuth: "<YOUR_API_KEY_HERE>",
 });
 
 async function run() {
-  const result = await bookClub.book.list({
-    limit: 10,
-    offset: 0,
+  const result = await bookClub.auth.login({
+    email: "jdoe123@email.com",
+    password: "mrg.qka5awy2jya*FTK",
   });
 
-  for await (const page of result) {
-    // Handle the page
-    console.log(page);
-  }
+  // Handle the result
+  console.log(result);
 }
 
 run();
 
 ```
 
-#### Option2
+### Per-Operation Security Schemes
 
-The `Option2` alternative relies on the following scheme:
-
-| Name         | Type | Scheme      |
-| ------------ | ---- | ----------- |
-| `bearerAuth` | http | HTTP Bearer |
-
-Example:
+Some operations in this SDK require the security scheme to be specified at the request level. For example:
 ```typescript
 import { BookClub } from "book-club";
 
-const bookClub = new BookClub({
-  security: {
-    option2: {
-      bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
-    },
-  },
-});
+const bookClub = new BookClub();
 
 async function run() {
   const result = await bookClub.book.list({
+    bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+    apiKeyAuth: "<YOUR_API_KEY_HERE>",
+  }, {
     limit: 10,
     offset: 0,
   });

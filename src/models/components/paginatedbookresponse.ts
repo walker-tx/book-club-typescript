@@ -3,6 +3,9 @@
  */
 
 import * as z from "zod";
+import { safeParse } from "../../lib/schemas.js";
+import { Result as SafeParseResult } from "../../types/fp.js";
+import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
   Book,
   Book$inboundSchema,
@@ -56,4 +59,22 @@ export namespace PaginatedBookResponse$ {
   export const outboundSchema = PaginatedBookResponse$outboundSchema;
   /** @deprecated use `PaginatedBookResponse$Outbound` instead. */
   export type Outbound = PaginatedBookResponse$Outbound;
+}
+
+export function paginatedBookResponseToJSON(
+  paginatedBookResponse: PaginatedBookResponse,
+): string {
+  return JSON.stringify(
+    PaginatedBookResponse$outboundSchema.parse(paginatedBookResponse),
+  );
+}
+
+export function paginatedBookResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<PaginatedBookResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => PaginatedBookResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'PaginatedBookResponse' from JSON`,
+  );
 }

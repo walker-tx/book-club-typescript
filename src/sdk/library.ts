@@ -14,11 +14,15 @@ export class Library extends ClientSDK {
    * List books by user
    */
   async get(
+    security: operations.GetUserLibrarySecurity,
     request: operations.GetUserLibraryRequest,
     options?: RequestOptions,
-  ): Promise<PageIterator<operations.GetUserLibraryResponse>> {
+  ): Promise<
+    PageIterator<operations.GetUserLibraryResponse, { offset: number }>
+  > {
     return unwrapResultIterator(libraryGet(
       this,
+      security,
       request,
       options,
     ));
@@ -28,11 +32,13 @@ export class Library extends ClientSDK {
    * Add book to user library
    */
   async add(
+    security: operations.AddBookToUserLibrarySecurity,
     request: operations.AddBookToUserLibraryRequest,
     options?: RequestOptions,
   ): Promise<void> {
     return unwrapAsync(libraryAdd(
       this,
+      security,
       request,
       options,
     ));

@@ -3,10 +3,86 @@
  */
 
 import * as z from "zod";
+import { remap as remap$ } from "../../lib/primitives.js";
+import { safeParse } from "../../lib/schemas.js";
+import { Result as SafeParseResult } from "../../types/fp.js";
+import { SDKValidationError } from "../errors/sdkvalidationerror.js";
+
+export type DeleteBookSecurity = {
+  bearerAuth: string;
+  apiKeyAuth: string;
+};
 
 export type DeleteBookRequest = {
   id: number;
 };
+
+/** @internal */
+export const DeleteBookSecurity$inboundSchema: z.ZodType<
+  DeleteBookSecurity,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  BearerAuth: z.string(),
+  ApiKeyAuth: z.string(),
+}).transform((v) => {
+  return remap$(v, {
+    "BearerAuth": "bearerAuth",
+    "ApiKeyAuth": "apiKeyAuth",
+  });
+});
+
+/** @internal */
+export type DeleteBookSecurity$Outbound = {
+  BearerAuth: string;
+  ApiKeyAuth: string;
+};
+
+/** @internal */
+export const DeleteBookSecurity$outboundSchema: z.ZodType<
+  DeleteBookSecurity$Outbound,
+  z.ZodTypeDef,
+  DeleteBookSecurity
+> = z.object({
+  bearerAuth: z.string(),
+  apiKeyAuth: z.string(),
+}).transform((v) => {
+  return remap$(v, {
+    bearerAuth: "BearerAuth",
+    apiKeyAuth: "ApiKeyAuth",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace DeleteBookSecurity$ {
+  /** @deprecated use `DeleteBookSecurity$inboundSchema` instead. */
+  export const inboundSchema = DeleteBookSecurity$inboundSchema;
+  /** @deprecated use `DeleteBookSecurity$outboundSchema` instead. */
+  export const outboundSchema = DeleteBookSecurity$outboundSchema;
+  /** @deprecated use `DeleteBookSecurity$Outbound` instead. */
+  export type Outbound = DeleteBookSecurity$Outbound;
+}
+
+export function deleteBookSecurityToJSON(
+  deleteBookSecurity: DeleteBookSecurity,
+): string {
+  return JSON.stringify(
+    DeleteBookSecurity$outboundSchema.parse(deleteBookSecurity),
+  );
+}
+
+export function deleteBookSecurityFromJSON(
+  jsonString: string,
+): SafeParseResult<DeleteBookSecurity, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => DeleteBookSecurity$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'DeleteBookSecurity' from JSON`,
+  );
+}
 
 /** @internal */
 export const DeleteBookRequest$inboundSchema: z.ZodType<
@@ -42,4 +118,22 @@ export namespace DeleteBookRequest$ {
   export const outboundSchema = DeleteBookRequest$outboundSchema;
   /** @deprecated use `DeleteBookRequest$Outbound` instead. */
   export type Outbound = DeleteBookRequest$Outbound;
+}
+
+export function deleteBookRequestToJSON(
+  deleteBookRequest: DeleteBookRequest,
+): string {
+  return JSON.stringify(
+    DeleteBookRequest$outboundSchema.parse(deleteBookRequest),
+  );
+}
+
+export function deleteBookRequestFromJSON(
+  jsonString: string,
+): SafeParseResult<DeleteBookRequest, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => DeleteBookRequest$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'DeleteBookRequest' from JSON`,
+  );
 }

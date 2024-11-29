@@ -60,7 +60,8 @@ export async function authLogin(
     Accept: "application/json",
   });
 
-  const securityInput = await extractSecurity(client._options.security);
+  const secConfig = await extractSecurity(client._options.apiKeyAuth);
+  const securityInput = secConfig == null ? {} : { apiKeyAuth: secConfig };
   const requestSecurity = resolveGlobalSecurity(securityInput);
 
   const context = {
@@ -69,7 +70,7 @@ export async function authLogin(
 
     resolvedSecurity: requestSecurity,
 
-    securitySource: client._options.security,
+    securitySource: client._options.apiKeyAuth,
     retryConfig: options?.retries
       || client._options.retryConfig
       || {

@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 6b0d5e4e-f586-44af-83f4-77a32484a16d
 management:
-  docChecksum: 499fda700fd9722a8040051b1f3cf7bf
+  docChecksum: 0f0b09798614950aa525178993826160
   docVersion: 1.0.0
-  speakeasyVersion: 1.438.1
-  generationVersion: 2.457.2
-  releaseVersion: 0.1.0
-  configChecksum: 02886053f0f2f6ae6fc523a6d9d6936c
+  speakeasyVersion: 1.448.2
+  generationVersion: 2.467.4
+  releaseVersion: 0.2.0
+  configChecksum: 0673a645041054cfba9f52ae7bf4782b
   repoURL: https://github.com/walker-tx/book-club-typescript.git
   installationURL: https://github.com/walker-tx/book-club-typescript
   published: true
@@ -14,19 +14,20 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.11
-    core: 3.18.3
+    core: 3.18.7
     defaultEnabledRetries: 0.1.0
     envVarSecurityUsage: 0.1.2
     globalSecurity: 2.82.11
     globalSecurityCallbacks: 0.1.0
+    globalSecurityFlattening: 0.1.0
     globalServerURLs: 2.82.4
+    methodSecurity: 2.82.4
     nameOverrides: 2.81.2
     nullables: 0.1.0
     pagination: 2.82.7
     responseFormat: 0.2.3
     retries: 2.83.0
     sdkHooks: 0.2.0
-    tests: 0.7.0
 generatedFiles:
   - .eslintrc.cjs
   - .gitattributes
@@ -38,21 +39,26 @@ generatedFiles:
   - docs/models/components/book.md
   - docs/models/components/paginatedbookresponse.md
   - docs/models/components/security.md
-  - docs/models/components/securityoption1.md
-  - docs/models/components/securityoption2.md
   - docs/models/components/user.md
   - docs/models/errors/errort.md
   - docs/models/operations/addbooktouserlibraryrequest.md
   - docs/models/operations/addbooktouserlibraryrequestbody.md
+  - docs/models/operations/addbooktouserlibrarysecurity.md
   - docs/models/operations/createbookrequestbody.md
+  - docs/models/operations/createbooksecurity.md
   - docs/models/operations/deletebookrequest.md
+  - docs/models/operations/deletebooksecurity.md
   - docs/models/operations/getbookrequest.md
+  - docs/models/operations/getbooksecurity.md
   - docs/models/operations/getuserlibraryrequest.md
   - docs/models/operations/getuserlibraryresponse.md
   - docs/models/operations/getuserlibraryresponsebody.md
+  - docs/models/operations/getuserlibrarysecurity.md
   - docs/models/operations/getuserrequest.md
+  - docs/models/operations/getusersecurity.md
   - docs/models/operations/listbooksrequest.md
   - docs/models/operations/listbooksresponse.md
+  - docs/models/operations/listbookssecurity.md
   - docs/models/operations/loginrequestbody.md
   - docs/models/operations/loginresponsebody.md
   - docs/models/operations/results.md
@@ -208,3 +214,4 @@ examples:
       responses:
         "400":
           application/json: {"code": 400, "message": "Bad Request"}
+generatedTests: {}

@@ -3,6 +3,9 @@
  */
 
 import * as z from "zod";
+import { safeParse } from "../../lib/schemas.js";
+import { Result as SafeParseResult } from "../../types/fp.js";
+import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type SignupRequestBody = {
   username: string;
@@ -50,4 +53,22 @@ export namespace SignupRequestBody$ {
   export const outboundSchema = SignupRequestBody$outboundSchema;
   /** @deprecated use `SignupRequestBody$Outbound` instead. */
   export type Outbound = SignupRequestBody$Outbound;
+}
+
+export function signupRequestBodyToJSON(
+  signupRequestBody: SignupRequestBody,
+): string {
+  return JSON.stringify(
+    SignupRequestBody$outboundSchema.parse(signupRequestBody),
+  );
+}
+
+export function signupRequestBodyFromJSON(
+  jsonString: string,
+): SafeParseResult<SignupRequestBody, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => SignupRequestBody$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'SignupRequestBody' from JSON`,
+  );
 }

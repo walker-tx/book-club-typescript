@@ -18,12 +18,7 @@ Log in
 import { BookClub } from "book-club";
 
 const bookClub = new BookClub({
-  security: {
-    option1: {
-      appIdAuth: "<YOUR_API_KEY_HERE>",
-      apiKeyAuth: "<YOUR_API_KEY_HERE>",
-    },
-  },
+  apiKeyAuth: "<YOUR_API_KEY_HERE>",
 });
 
 async function run() {
@@ -50,12 +45,7 @@ import { authLogin } from "book-club/funcs/authLogin.js";
 // Use `BookClubCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const bookClub = new BookClubCore({
-  security: {
-    option1: {
-      appIdAuth: "<YOUR_API_KEY_HERE>",
-      apiKeyAuth: "<YOUR_API_KEY_HERE>",
-    },
-  },
+  apiKeyAuth: "<YOUR_API_KEY_HERE>",
 });
 
 async function run() {
@@ -107,12 +97,7 @@ Sign up
 import { BookClub } from "book-club";
 
 const bookClub = new BookClub({
-  security: {
-    option1: {
-      appIdAuth: "<YOUR_API_KEY_HERE>",
-      apiKeyAuth: "<YOUR_API_KEY_HERE>",
-    },
-  },
+  apiKeyAuth: "<YOUR_API_KEY_HERE>",
 });
 
 async function run() {
@@ -139,12 +124,7 @@ import { authSignup } from "book-club/funcs/authSignup.js";
 // Use `BookClubCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const bookClub = new BookClubCore({
-  security: {
-    option1: {
-      appIdAuth: "<YOUR_API_KEY_HERE>",
-      apiKeyAuth: "<YOUR_API_KEY_HERE>",
-    },
-  },
+  apiKeyAuth: "<YOUR_API_KEY_HERE>",
 });
 
 async function run() {

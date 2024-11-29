@@ -13,11 +13,13 @@ export class User extends ClientSDK {
    * Get a user by ID
    */
   async get(
+    security: operations.GetUserSecurity,
     request: operations.GetUserRequest,
     options?: RequestOptions,
   ): Promise<components.User> {
     return unwrapAsync(userGet(
       this,
+      security,
       request,
       options,
     ));

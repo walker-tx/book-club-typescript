@@ -16,5 +16,5 @@ targets:
                 token: $npm_token
         codeSamples:
             registry:
-                location: registry.speakeasyapi.dev/walker/walker/book-club-oas-code-samples
+                location: registry.speakeasyapi.dev/walker/walker/book-club-oas-typescript-code-samples
             blocking: false
