@@ -3,10 +3,10 @@ id: 6b0d5e4e-f586-44af-83f4-77a32484a16d
 management:
   docChecksum: 0f0b09798614950aa525178993826160
   docVersion: 1.0.0
-  speakeasyVersion: 1.448.2
-  generationVersion: 2.467.4
-  releaseVersion: 0.2.0
-  configChecksum: 0673a645041054cfba9f52ae7bf4782b
+  speakeasyVersion: 1.455.3
+  generationVersion: 2.479.3
+  releaseVersion: 0.2.2
+  configChecksum: a9222f1535015b78a00946a259d13c79
   repoURL: https://github.com/walker-tx/book-club-typescript.git
   installationURL: https://github.com/walker-tx/book-club-typescript
   published: true
@@ -14,7 +14,7 @@ features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.11
-    core: 3.18.7
+    core: 3.18.9
     defaultEnabledRetries: 0.1.0
     envVarSecurityUsage: 0.1.2
     globalSecurity: 2.82.11

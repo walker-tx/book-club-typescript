@@ -1,20 +1,21 @@
 workflowVersion: 1.0.0
 speakeasyVersion: latest
 sources:
-    BookClub-OAS:
-        inputs:
-            - location: https://book-club-api-opal.vercel.app/api/docs
-        registry:
-            location: registry.speakeasyapi.dev/walker/walker/book-club-oas
+  BookClub-OAS:
+    inputs:
+      - location: https://book-club-api-opal.vercel.app/api/docs
+    registry:
+      location: registry.speakeasyapi.dev/walker/walker/book-club-oas
 targets:
-    book-club:
-        target: typescript
-        source: BookClub-OAS
-        output: .
-        publish:
-            npm:
-                token: $npm_token
-        codeSamples:
-            registry:
-                location: registry.speakeasyapi.dev/walker/walker/book-club-oas-typescript-code-samples
-            blocking: false
+  book-club:
+    target: typescript
+    source: BookClub-OAS
+    output: .
+    publish:
+      npm:
+        token: $npm_token
+    codeSamples:
+      style: readme
+      registry:
+        location: registry.speakeasyapi.dev/walker/walker/book-club-oas-typescript-code-samples
+      blocking: false
