@@ -116,6 +116,7 @@ export async function bookList(
   const requestRes = client._createRequest(context, {
     security: requestSecurity,
     method: "GET",
+    baseURL: options?.serverURL,
     path: path,
     headers: headers,
     query: query,
@@ -179,7 +180,7 @@ export async function bookList(
     >;
     "~next"?: { offset: number };
   } => {
-    const offset = request?.offset || 0;
+    const offset = request?.offset ?? 0;
 
     if (!responseData) {
       return { next: () => null };

@@ -1,6 +1,6 @@
 {
   "name": "book-club",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "author": "Walker Lockard",
   "main": "./index.js",
   "sideEffects": false,

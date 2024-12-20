@@ -1,8 +1,8 @@
-speakeasyVersion: 1.455.3
+speakeasyVersion: 1.459.1
 sources:
     BookClub-OAS:
         sourceNamespace: book-club-oas
-        sourceRevisionDigest: sha256:05e4a7f7016ecc7b19cb308f6aa1b67353113e8893c0d9183a9d112f74975166
+        sourceRevisionDigest: sha256:18ac16f8341ffc40e084dd61bb43739ce1ea9c0843f1bc006593242cb3d64ac0
         sourceBlobDigest: sha256:d21bcaa5011512b8882cbc9f7ec9aedb195cf01979cd44bc720c0fdfcfd77910
         tags:
             - latest
@@ -11,10 +11,10 @@ targets:
     book-club:
         source: BookClub-OAS
         sourceNamespace: book-club-oas
-        sourceRevisionDigest: sha256:05e4a7f7016ecc7b19cb308f6aa1b67353113e8893c0d9183a9d112f74975166
+        sourceRevisionDigest: sha256:18ac16f8341ffc40e084dd61bb43739ce1ea9c0843f1bc006593242cb3d64ac0
         sourceBlobDigest: sha256:d21bcaa5011512b8882cbc9f7ec9aedb195cf01979cd44bc720c0fdfcfd77910
         codeSamplesNamespace: book-club-oas-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:36307845b81a1d8de73cfe90c1a413b78c176313e36524a7a80b412a3530994c
+        codeSamplesRevisionDigest: sha256:b4dc0fabcb8f142ea667b7427acd88ca0fff89ebc555c2fa94e38ce837f5428a
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
@@ -36,4 +36,5 @@ workflow:
                 registry:
                     location: registry.speakeasyapi.dev/walker/walker/book-club-oas-typescript-code-samples
                 style: readme
+                langOverride: javascript
                 blocking: false
